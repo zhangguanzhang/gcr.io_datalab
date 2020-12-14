@@ -36,6 +36,20 @@ jobs:
     - name: script
       id: sync
       run: |
+        echo sudo \
+          ${HOME}/sync/imgsync sync \
+          --db ${HOME}/sync/bolt.db \
+          --push-to registry.aliyuncs.com \
+          --password ${PASS}  \
+          --push-ns=k8sxio  \
+          --user zhangguanzhang@qq.com  \
+          --command-timeout ${TMOUT}  \
+          --process-limit ${PROCESS:=2} \
+          --img-timeout ${IMG_TMOUT:=10m} \
+          --live-interval ${LIVE:=9m20s}  \
+          --login-retry ${LOGIN_RETRY:=8} \
+          --debug=${DEBUG:=false}
+           
         sudo \
           ${HOME}/sync/imgsync sync \
           --db ${HOME}/sync/bolt.db \
