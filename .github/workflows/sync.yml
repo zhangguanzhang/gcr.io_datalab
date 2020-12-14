@@ -40,7 +40,7 @@ jobs:
           ${HOME}/sync/imgsync sync \
           --db ${HOME}/sync/bolt.db \
           --push-to registry.aliyuncs.com \
-          --password ${PASS}  \
+          --password ${{ secrets.PASS }}  \
           --push-ns=k8sxio  \
           --user zhangguanzhang@qq.com  \
           --command-timeout ${TMOUT:=2h}  \
