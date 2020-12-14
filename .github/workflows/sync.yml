@@ -9,9 +9,10 @@ on:
     branches: [ master ]
 
 jobs:
-
   build:
     name: Build
+    env:
+      DOCKER_PASS: ${{ secrets.DOCKER_PASS }} 
     runs-on: ubuntu-latest
     steps:
 
