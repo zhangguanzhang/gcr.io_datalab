@@ -43,7 +43,7 @@ jobs:
           --password ${PASS}  \
           --push-ns=k8sxio  \
           --user zhangguanzhang@qq.com  \
-          --command-timeout ${TMOUT}  \
+          --command-timeout ${TMOUT:=2h}  \
           --process-limit ${PROCESS:=2} \
           --img-timeout ${IMG_TMOUT:=10m} \
           --live-interval ${LIVE:=9m20s}  \
