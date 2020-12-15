@@ -36,7 +36,7 @@ jobs:
     - name: after_success
       run: |
         echo success
-      if: ${{ steps.sync.success }} == 'success'
+      if: ${{ steps.sync.outcome }} == 'success'
     - name: after_failure
       run: |
         echo failure
