@@ -16,24 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Set up Go 1.x
-      uses: actions/setup-go@v2
-      with:
-        go-version: ^1.15
-
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-    - name: install docker
-      uses: docker-practice/actions-setup-docker@master
-
-    - name: before_script
+    - name: script
+      id: test1
+      continue-on-error: true
       run: |
-        bash build/build.sh build
-        bash .travis/travis-before.sh
-        ls -alh ${HOME}/sync/
-        ${HOME}/sync/imgsync sum ${HOME}/sync/bolt.db | wc -l
-      env:
-        CGO_ENABLED: 0
+        ls -l sadasd
+        
     - name: script
       id: sync
       continue-on-error: true
