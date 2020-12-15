@@ -40,4 +40,4 @@ jobs:
     - name: after_failure
       run: |
         echo failure
-      if: steps.sync.outcome == 'failure'
+      if: steps.sync.outcome != 'success'
