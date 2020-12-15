@@ -1,4 +1,4 @@
-name: Go
+name: sync k8s.gcr.io
 
 on:
   push:
@@ -29,35 +29,29 @@ jobs:
     - name: before_script
       run: |
         bash build/build.sh build
-        bash .travis/travis-before.sh
+        bash .github/scripts/ci-before.sh
         ls -alh ${HOME}/sync/
         ${HOME}/sync/imgsync sum ${HOME}/sync/bolt.db | wc -l
       env:
         CGO_ENABLED: 0
     - name: script
       id: sync
+      continue-on-error: true
       run: |
-        sudo \
-          ${HOME}/sync/imgsync sync \
-          --db ${HOME}/sync/bolt.db \
-          --push-to registry.aliyuncs.com \
-          --password ${{ secrets.PASS }}  \
-          --push-ns=k8sxio  \
-          --user zhangguanzhang@qq.com  \
-          --command-timeout ${TMOUT:=2h}  \
-          --process-limit ${PROCESS:=2} \
-          --img-timeout ${IMG_TMOUT:=10m} \
-          --live-interval ${LIVE:=9m20s}  \
-          --login-retry ${LOGIN_RETRY:=8} \
-          --debug=${DEBUG:=false}
+        ls -l
+    - name: Dump steps context
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
+      
     - name: after_success
       run: |
-        bash .travis/travis-after.sh
+        bash .github/scripts/ci-after.sh
         ls -alh ${HOME}/sync/
         ${HOME}/sync/imgsync sum ${HOME}/sync/bolt.db | wc -l
-      if: ${{ steps.sync.conclusion }} == "success"
+      if: ${{ steps.sync.success() }}
     - name: after_failure
       run: |
-        bash .travis/travis-after.sh
+        bash .github/scripts/ci-after.sh
         ls -alh ${HOME}/sync/
-      if: ${{ steps.sync.conclusion }} != "success"
+      if: "!${{ steps.sync.success() }}"
