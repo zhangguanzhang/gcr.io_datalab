@@ -29,7 +29,7 @@ jobs:
     - name: before_script
       run: |
         bash build/build.sh build
-        bash .github/scripts/ci-before.sh
+        bash .travis/travis-before.sh
         ls -alh ${HOME}/sync/
         ${HOME}/sync/imgsync sum ${HOME}/sync/bolt.db | wc -l
       env:
@@ -46,7 +46,7 @@ jobs:
       
     - name: after_success
       run: |
-        bash .github/scripts/ci-after.sh
+        bash .travis/travis-after.sh
         ls -alh ${HOME}/sync/
         ${HOME}/sync/imgsync sum ${HOME}/sync/bolt.db | wc -l
 #       if: steps.sync.success() == 'true'
