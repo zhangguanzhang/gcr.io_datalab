@@ -49,7 +49,7 @@ jobs:
         bash .github/scripts/ci-after.sh
         ls -alh ${HOME}/sync/
         ${HOME}/sync/imgsync sum ${HOME}/sync/bolt.db | wc -l
-      if: steps.sync.success()
+      if: steps.sync.success() == 'true'
 #     - name: after_failure
 #       run: |
 #         bash .github/scripts/ci-after.sh
